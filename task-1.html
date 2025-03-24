@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Validation</title>
+    <script>
+        function validateName() {
+            let name = document.getElementById("name").value.trim();
+            
+            if (name === "") {
+                alert("Name cannot be empty!");
+                return false;
+            }
+
+            let words = name.split(" ");  
+
+            if (words.length < 2) {
+                alert("Name must contain at least two words.");
+                return false;
+            }
+
+            for (let word of words) {
+                if (!isValidWord(word)) {
+                    alert("Each word must start with a letter and contain only letters, dots, or dashes.");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function isValidWord(word) {
+            if (word.length === 0) return false;
+            
+            let firstChar = word.charAt(0);
+            if (!isLetter(firstChar)) return false; 
+
+            for (let i = 1; i < word.length; i++) {
+                let ch = word.charAt(i);
+                if (!isLetter(ch) && ch !== '.' && ch !== '-') {
+                    return false; 
+                }
+            }
+
+            return true;
+        }
+
+        function isLetter(char) {
+            return (char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z');
+        }
+    </script>
+</head>
+<body>
+    <form onsubmit="return validateName()">
+        <label>Name</label>
+        <input type="text" id="name">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,91 @@
+2
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation</title>
+    <script>
+        function validateEmail() {
+            let email = document.getElementById("email").value.trim();
+
+            if (email === "") {
+                alert("Email cannot be empty!");
+                return false;
+            }
+
+            // Splitting the email into parts
+            let atIndex = email.indexOf("@");
+            let dotIndex = email.lastIndexOf(".");
+
+            if (atIndex < 1  dotIndex < atIndex + 2  dotIndex >= email.length - 1) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            return true;
+        }
+
+        function validateName() {
+            let name = document.getElementById("name").value.trim();
+            
+            if (name === "") {
+                alert("Name cannot be empty!");
+                return false;
+            }
+
+            let words = name.split(" ");  // Split the name into words
+
+            if (words.length < 2) {
+                alert("Name must contain at least two words.");
+                return false;
+            }
+
+            for (let word of words) {
+                if (!isValidWord(word)) {
+                    alert("Each word must start with a letter and contain only letters, dots, or dashes.");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function isValidWord(word) {
+            if (word.length === 0) return false;
+            
+            let firstChar = word.charAt(0);
+            if (!isLetter(firstChar)) return false; // First character must be a letter
+
+            for (let i = 1; i < word.length; i++) {
+                let ch = word.charAt(i);
+                if (!isLetter(ch) && ch !== '.' && ch !== '-') {
+                    return false; // Only allow letters, dots, and dashes
+                }
+            }
+
+            return true;
+        }
+
+        function isLetter(char) {
+            return (char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z');
+        }
+    </script>
+</head>
+<body>
+    <h2>Email Validation</h2>
+    <form onsubmit="return validateEmail()">
+        <label>Email</label>
+        <input type="text" id="email">
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Name Validation</h2>
+    <form onsubmit="return validateName()">
+        <label>Name</label>
+        <input type="text" id="name">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
